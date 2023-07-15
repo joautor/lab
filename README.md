@@ -1,2 +1,2 @@
 # lab
-A personal repository. Contains my coding adventures, study materials, and projects.
+A personal repository. Contains my coding adventures, study materials, and mini projects.
