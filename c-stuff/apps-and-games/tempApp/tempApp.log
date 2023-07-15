@@ -1,0 +1,91 @@
+** [ERROR] ** src/tempApp.c::main This is sample error!
+Hello World!
+Unsorted array: 
+  9   7   5   3   1   0   2   4   6   8 
+[DEBUG] src/tempApp.c::compareInt comparing 9 and 7
+[DEBUG] src/tempApp.c::swapInt swapping 9 and 7
+[DEBUG] src/tempApp.c::compareInt comparing 9 and 5
+[DEBUG] src/tempApp.c::swapInt swapping 9 and 5
+[DEBUG] src/tempApp.c::compareInt comparing 9 and 3
+[DEBUG] src/tempApp.c::swapInt swapping 9 and 3
+[DEBUG] src/tempApp.c::compareInt comparing 9 and 1
+[DEBUG] src/tempApp.c::swapInt swapping 9 and 1
+[DEBUG] src/tempApp.c::compareInt comparing 9 and 0
+[DEBUG] src/tempApp.c::swapInt swapping 9 and 0
+[DEBUG] src/tempApp.c::compareInt comparing 9 and 2
+[DEBUG] src/tempApp.c::swapInt swapping 9 and 2
+[DEBUG] src/tempApp.c::compareInt comparing 9 and 4
+[DEBUG] src/tempApp.c::swapInt swapping 9 and 4
+[DEBUG] src/tempApp.c::compareInt comparing 9 and 6
+[DEBUG] src/tempApp.c::swapInt swapping 9 and 6
+[DEBUG] src/tempApp.c::compareInt comparing 9 and 8
+[DEBUG] src/tempApp.c::swapInt swapping 9 and 8
+[DEBUG] src/tempApp.c::compareInt comparing 7 and 5
+[DEBUG] src/tempApp.c::swapInt swapping 7 and 5
+[DEBUG] src/tempApp.c::compareInt comparing 7 and 3
+[DEBUG] src/tempApp.c::swapInt swapping 7 and 3
+[DEBUG] src/tempApp.c::compareInt comparing 7 and 1
+[DEBUG] src/tempApp.c::swapInt swapping 7 and 1
+[DEBUG] src/tempApp.c::compareInt comparing 7 and 0
+[DEBUG] src/tempApp.c::swapInt swapping 7 and 0
+[DEBUG] src/tempApp.c::compareInt comparing 7 and 2
+[DEBUG] src/tempApp.c::swapInt swapping 7 and 2
+[DEBUG] src/tempApp.c::compareInt comparing 7 and 4
+[DEBUG] src/tempApp.c::swapInt swapping 7 and 4
+[DEBUG] src/tempApp.c::compareInt comparing 7 and 6
+[DEBUG] src/tempApp.c::swapInt swapping 7 and 6
+[DEBUG] src/tempApp.c::compareInt comparing 7 and 8
+[DEBUG] src/tempApp.c::compareInt comparing 5 and 3
+[DEBUG] src/tempApp.c::swapInt swapping 5 and 3
+[DEBUG] src/tempApp.c::compareInt comparing 5 and 1
+[DEBUG] src/tempApp.c::swapInt swapping 5 and 1
+[DEBUG] src/tempApp.c::compareInt comparing 5 and 0
+[DEBUG] src/tempApp.c::swapInt swapping 5 and 0
+[DEBUG] src/tempApp.c::compareInt comparing 5 and 2
+[DEBUG] src/tempApp.c::swapInt swapping 5 and 2
+[DEBUG] src/tempApp.c::compareInt comparing 5 and 4
+[DEBUG] src/tempApp.c::swapInt swapping 5 and 4
+[DEBUG] src/tempApp.c::compareInt comparing 5 and 6
+[DEBUG] src/tempApp.c::compareInt comparing 6 and 7
+[DEBUG] src/tempApp.c::compareInt comparing 3 and 1
+[DEBUG] src/tempApp.c::swapInt swapping 3 and 1
+[DEBUG] src/tempApp.c::compareInt comparing 3 and 0
+[DEBUG] src/tempApp.c::swapInt swapping 3 and 0
+[DEBUG] src/tempApp.c::compareInt comparing 3 and 2
+[DEBUG] src/tempApp.c::swapInt swapping 3 and 2
+[DEBUG] src/tempApp.c::compareInt comparing 3 and 4
+[DEBUG] src/tempApp.c::compareInt comparing 4 and 5
+[DEBUG] src/tempApp.c::compareInt comparing 5 and 6
+[DEBUG] src/tempApp.c::compareInt comparing 1 and 0
+[DEBUG] src/tempApp.c::swapInt swapping 1 and 0
+[DEBUG] src/tempApp.c::compareInt comparing 1 and 2
+[DEBUG] src/tempApp.c::compareInt comparing 2 and 3
+[DEBUG] src/tempApp.c::compareInt comparing 3 and 4
+[DEBUG] src/tempApp.c::compareInt comparing 4 and 5
+[DEBUG] src/tempApp.c::compareInt comparing 0 and 1
+[DEBUG] src/tempApp.c::compareInt comparing 1 and 2
+[DEBUG] src/tempApp.c::compareInt comparing 2 and 3
+[DEBUG] src/tempApp.c::compareInt comparing 3 and 4
+[DEBUG] src/tempApp.c::compareInt comparing 0 and 1
+[DEBUG] src/tempApp.c::compareInt comparing 1 and 2
+[DEBUG] src/tempApp.c::compareInt comparing 2 and 3
+[DEBUG] src/tempApp.c::compareInt comparing 0 and 1
+[DEBUG] src/tempApp.c::compareInt comparing 1 and 2
+[DEBUG] src/tempApp.c::compareInt comparing 0 and 1
+Sorted using bubble sort:
+  0   1   2   3   4   5   6   7   8   9 
+unsorter letters:  
+a l l y n m i n e ! 
+sorter using bubble sort:
+! a e i l l m n n y 
+[WARNING] src/tempApp.c::main This is sample warning!
+[INFO] src/tempApp.c::main 
+[INFO] src/tempApp.c::main before copying: 
+	 message1: HelloWorld
+	 message2: 
+
+[DEBUG] ../../utility/utstring.c::ut_strncpy 
+[INFO] src/tempApp.c::main after copying: 
+	 message1: HelloWorld
+	 message2: HelloWorld
+
