@@ -1,0 +1,2 @@
+The video files(~6GB) are two huge to be added on the repository.
+Removed as of now.
