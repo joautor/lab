@@ -89,13 +89,21 @@ void generateNewFood(Node* node)
     food.scoreValue = 1; // Deault is 1 but later on we can increase it we add new stages etc.
 }
 
+void clearScreen()
+{
+    // for (int i = 0; i < 30; ++i) printf("\n");   // For Windows terminal
+    system("clear"); // For linux terminal
+}
+
+
 void printControls()
 {
-    printf("\n\tMovements: \t\t(a) left\t(w) up\t(d) right\t(s) down\n");
+    printf("\nMovements: \t(a) left   (w) up   (d) right   (s) down\n");
 }
 
 void printSnakeWelcome()
 {
+    clearScreen();
     printf("\n");
     printf("%s\t\t                           ____\n", KBLU);
     printf("\t\t  ________________________/ O  \\___/\n");
@@ -275,11 +283,6 @@ void borderLine()
     printf("\t+------------------------------+\n");
 }
 
-void clearScreen()
-{
-    for (int i = 0; i < 30; ++i) printf("\n");
-    //system("clear");
-}
 
 bool isCoordANode(Node* head, int x, int y, Node** out)
 {
@@ -322,6 +325,7 @@ void printGrid(Node* head, int size)
         printf("%s|\n", KNRM); // Right border
     }
     borderLine(); // Lower border
+    printControls();
     separatorLine();
 }
 

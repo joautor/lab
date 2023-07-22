@@ -9,3 +9,6 @@ snake: $(src_dir)/snake.c
 
 clean:
 	rm $(bin_dir)/snake
+
+run:
+	./$(bin_dir)/snake
