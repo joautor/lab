@@ -1,0 +1,166 @@
+h j k l 
+
+0 … $ 
+
+w-> 
+
+<-b                     d + _ 
+
+->e 
+
+G --> go to last line  
+
+gg --> go to first line 
+
+u --> undo 
+
+Ctrl + r --> redo 
+
+/search  
+
+n--> next 
+
+N--> prev 
+
+?search -->backward search 
+
+%s/search/replace/g 
+
+ 
+
+v--> 1 char at a time 
+
+V--> 1 line at a time 
+
+Ctrl + v --> 1 column at a time  
+
+p--> paste to next line 
+
+P --> paste to current line 
+
+Y --> copy to buffer 
+
+ 
+
+.vimrc 
+
+:set smartindent 
+
+:set tabstop=4 
+
+:set shiftwidth=4 
+
+:set expandtab 
+
+:set nu|number 
+
+
+:e %:h
+
+:Sex | Vex
+
+:Explore
+
+:e dir/to/file
+
+
+
+:set mouse a
+
+vim f1 f2 f3
+
+:n(ext)
+
+:prev
+
+vim -p f1 f2 f3
+
+:tabe path/to/file
+
+:tabn(ext)
+
+:tabp(revious)
+
+:tabc(lose)
+
+:tabe %:h
+
+
+gt 
+gT 
+
+Also: 
+Ngt where N is a tab number (start 1)
+
+
+:grep -R text *
+
+grep -rni --color=always "partern" dir 
+
+ 
+
+find dir -type d|s -maxdepth X| -mindepth X -iname *textToSearch*" 
+pushd 
+Popd 
+Ctrl + r (search from previous terminal commands) 
+
+
+user - group - others 
+
+0 --> !p 
+1 -->e 
+2 -->w 
+4 -->r 
+
+
+VIM PLUGINS!!!! 
+
+    create .vimrc file (if not yet created) 
+
+    Enter command: 
+
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \ 
+
+https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 
+
+    Type in your .vimrc 
+
+ 
+
+call plug#begin('~/.vim/plugged') 
+
+Plug 'airblade/vim-gitgutter' 
+
+Plug 'editorconfig/editorconfig-vim' 
+
+Plug 'itchyny/lightline.vim' 
+
+Plug 'junegunn/fzf' 
+
+Plug 'junegunn/fzf.vim' 
+
+Plug 'mattn/emmet-vim' 
+
+Plug 'scrooloose/nerdtree' 
+
+Plug 'terryma/vim-multiple-cursors' 
+
+Plug 'tpope/vim-eunuch' 
+
+Plug 'tpope/vim-surround' 
+
+Plug 'w0rp/ale' 
+
+call plug#end() 
+
+    :source ~/.vimrc 
+
+    :PlugInstall 
+
+
+
+
+Setting spaces back to tab
+:set tabstop=4          "To match the sample file
+:set noexpandtab        "Use tabs,not spaces
+:%retab!                " Retabulate the whole file
