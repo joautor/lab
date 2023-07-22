@@ -9,3 +9,6 @@ hangman: $(src_dir)/hangman.c
 
 clean:
 	rm $(bin_dir)/hangman
+
+run:
+	./$(bin_dir)/hangman
