@@ -1,0 +1,105 @@
+
+call plug#begin('~/.vim/plugged')
+Plug 'leafgarland/typescript-vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'bling/vim-airline'
+Plug 'bling/vim-bufferline'
+Plug 'kshenoy/vim-signature'
+Plug 'airblade/vim-gitgutter'
+Plug 'altercation/vim-colors-solarized'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mileszs/ack.vim'
+Plug 'rking/ag.vim'
+Plug 'ervandew/supertab'
+Plug 'gregsexton/gitv'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/syntastic'
+Plug 'valloric/YouCompleteMe'
+Plug 'Quramy/tsuquyomi'
+Plug 'Shougo/vimproc.vim'
+Plug 'plasticboy/vim-markdown'
+call plug#end()
+
+" Pset nocompatiblelug 'git://github.com/tpope/vim-commentary.git'
+
+let g:ctrlp_working_path_mode = 'ra' 
+let g:ctrlp_root_markers = ['.ctrlp']
+let g:ctrlp_max_files=0
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$|(node_modules|REL.BIN)$|C_Test.*(tmp|logs)$',
+  \ 'file': '\v\.(exe|so|dll|o)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set autoindent
+
+set number
+highlight LineNr ctermfg=grey
+
+set list listchars=tab:>-,trail:.,extends:>
+set list
+
+set hlsearch
+set laststatus=2
+
+set syntax=on
+syntax enable
+set background=dark
+
+:set directory=~/.vim/swapfiles/
+:set backupdir=~/.vim/swapfiles/
+:set nowrap
+
+nnoremap th  :tabnext<CR>
+nnoremap tl  :tabprev<CR>
+
+autocmd FileType jade :setlocal shiftwidth=2 tabstop=2 softtabstop=2
+
+:let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+
+func! ExtractCalltrace()
+    v/ #\d\+ /d
+    %s/^.* #\d\+ \+\(\S\+\).*$/\1
+    %s/\n/ /g
+endfunc
+
+func! CreateUml()
+    w
+    !java -jar /work/btsom/architecture/plantuml.jar % &
+endfunc
+
+func! FixDiff()
+    %s/(nonexistent)$/(revision 0)
+endfunc
+
+
+set colorcolumn=110
+highlight ColorColumn ctermbg=black
+
+set foldmethod=syntax
+set foldlevel=99
+highlight Folded ctermbg=black
+
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '~'
+map <C-o> : NERDTreeToggle<CR>
+
+
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
+autocmd Filetype lua setlocal ts=2 sts=2 sw=2
+
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
+set encoding=utf-8
+
+let g:syntastic_python_python_exec = '/usr/bin/python3'
+
+au BufRead,BufNewFile *.{dmd,main} set filetype=markdown
