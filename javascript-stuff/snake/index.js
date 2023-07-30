@@ -379,7 +379,7 @@ function init() {
     food = createFood();
     score = 0;
     foodEatenNum = 0;
-    level = 2;
+    level = 1;
     createObstacles(level);
 }
 
@@ -425,12 +425,13 @@ function animate() {
         snake.update();
     }
 
-    /*if (foodEatenNum === 10) {
+    if (foodEatenNum === 10) {
+        foodEateNum = 0;
         level++;
         createObstacles(level);
         snake = createSnake();
         food = createFood();
-    }*/
+    }
 
 }
 
