@@ -19,6 +19,8 @@
 
 typedef enum {up, right, down, left} Direction;
 
+typedef enum {manual, ai} GameMode;
+
 typedef struct Food {
     int x;
     int y;
@@ -36,15 +38,87 @@ typedef struct Node{
 
 
 //=================== ** Global Data ** =====================
-
+GameMode mode = ai;
 Direction currentDir = down;
 Food food = { 0, 0, 1 };
 bool isGameOver = false;
 int score = 0;
 // pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
+int map[GRID_SIZE][GRID_SIZE];
 
+int rowOffset[] = { -1, 0, 1, 0 };
+int colOffset[] = { 0, 1, 0, -1 };
+
+Direction moveStack[GRID_SIZE*GRID_SIZE];
+int stackSize = 0;
 //==========================================================
+
+// Forward Declarations
+
+void push(Direction d);
+Direction pop();
+bool isStackEmpty();
+bool isOppositeDir(Direction d1, Direction d2);
+void setDirection(Direction dir);
+bool isPartOfSnake(Node* node, int x, int y);
+void generateNewFood(Node* node);
+void clearScreen();
+void printControls();
+void printSnakeWelcome();
+void* handleUserInput(void* argv);
+Node* generateNode(int x, int y);
+void dumpNode(Node* node);
+void dumpSnake(Node* node);
+void deleteAllNodes(Node* node);
+Node* getTail(Node* node);
+bool isAFood(int x, int y);
+Node* moveSnake(Node* headNode, int x, int y);
+Node* generateDefaultSnake(int numNodes, int startX, int startY);
+void separatorLine();
+void borderLine();
+bool isCoordANode(Node* head, int x, int y, Node** out);
+void printGrid(Node* head, int size);
+bool searchFood(int row, int col);
+void getNextMoveCoord(Node* head, int* outX, int* outY);
+void updateMap(Node* head);
+void dumpStack();
+
+
+// Definitions starts here
+
+void push(Direction d)
+{
+    if (stackSize >= (GRID_SIZE * GRID_SIZE)) return;
+    moveStack[stackSize++] = d;
+}
+
+Direction pop()
+{
+    if (isStackEmpty()) return currentDir;
+    return moveStack[--stackSize];
+}
+
+bool isStackEmpty()
+{
+    return (stackSize == 0);
+}
+
+// For debugging
+void dumpStack()
+{
+    printf("current stack: ");
+    for (int i = 0; i < stackSize; i++) {
+        switch (moveStack[i]) {
+            case up: printf("up "); break;
+            case right: printf("right "); break;
+            case down: printf("down "); break;
+            case left: printf("left "); break;
+            default: printf("??? "); break;
+        }
+    }
+    printf("\n");
+}
 
 bool isOppositeDir(Direction d1, Direction d2)
 {
@@ -329,6 +403,28 @@ void printGrid(Node* head, int size)
     separatorLine();
 }
 
+bool searchFood(int row, int col)
+{
+    if (isAFood(row, col)) return true;
+
+    for(int dir = 0; dir < 4; dir++) {
+        int nextRow = row + rowOffset[dir];
+        int nextCol = col + colOffset[dir];
+        if (nextRow < 0 || nextRow >= GRID_SIZE) continue; // Skip outside of map
+        if (nextCol < 0 || nextCol >= GRID_SIZE) continue; // Skip outside of map
+        if (map[nextRow][nextCol] == 1) continue; // Skip obstacles or visited coordinates
+
+        map[nextRow][nextCol] = 1;
+        if (searchFood(nextRow, nextCol)) {
+            push((Direction)dir);
+            return true;
+        }
+        map[nextRow][nextCol] = 0;
+    }
+    return false;
+}
+
+
 void getNextMoveCoord(Node* head, int* outX, int* outY)
 {
     if (head == NULL) {
@@ -336,6 +432,11 @@ void getNextMoveCoord(Node* head, int* outX, int* outY)
         *outX = 0;
         *outY = 0;
         return;
+    }
+
+    if (mode == ai) {
+        if (isStackEmpty()) searchFood(head->x, head->y);
+        currentDir = pop();
     }
 
     switch(currentDir) {
@@ -370,6 +471,22 @@ void getNextMoveCoord(Node* head, int* outX, int* outY)
     if (*outY < 0) *outY += GRID_SIZE;
 }
 
+void updateMap(Node* head)
+{
+    if (head == NULL) return;
+    for (int row = 0; row < GRID_SIZE; row++) {
+        for (int col = 0; col < GRID_SIZE; col++) {
+            Node* out = NULL;
+            if (isCoordANode(head, row, col, &out)) {
+                map[row][col] = 1;
+            } else {
+                map[row][col] = 0;
+            }
+
+        }
+    }
+}
+
 int main()
 {
     printSnakeWelcome();
@@ -385,15 +502,19 @@ int main()
 
     generateNewFood(headNode);   // Initial food location and score value
 
+    updateMap(headNode);
     do {
         clearScreen();
         int x;
         int y;
         getNextMoveCoord(headNode, &x, &y);
         headNode = moveSnake(headNode, x, y);
+        updateMap(headNode);
         printGrid(headNode, GRID_SIZE);
+        dumpStack();
         sleep(1);
-    } while (!isGameOver);
+        //if (true) break;
+    } while (!isGameOver || true);
 
     pthread_cancel(thread_0); // Kill thread directly because it is already game over
     pthread_join(thread_0, NULL);
