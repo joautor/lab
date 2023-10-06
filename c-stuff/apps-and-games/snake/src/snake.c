@@ -16,6 +16,14 @@
 #define KRED    "\x1B[31m"
 #define KBLU    "\x1B[34m"
 
+/*
+    x
+ _______
+ |
+y|
+ |
+
+*/
 
 typedef enum {up, right, down, left} Direction;
 
@@ -47,8 +55,8 @@ int score = 0;
 
 int map[GRID_SIZE][GRID_SIZE];
 
-int rowOffset[] = { -1, 0, 1, 0 };
-int colOffset[] = { 0, 1, 0, -1 };
+int xOffset[] = { 0, 1, 0, -1 };
+int yOffset[] = { -1, 0, 1, 0 };
 
 Direction moveStack[GRID_SIZE*GRID_SIZE];
 int stackSize = 0;
@@ -79,9 +87,11 @@ void separatorLine();
 void borderLine();
 bool isCoordANode(Node* head, int x, int y, Node** out);
 void printGrid(Node* head, int size);
-bool searchFood(int row, int col);
+bool searchFood(int x, int y);
+Direction getBestMove(int x, int y);
 void getNextMoveCoord(Node* head, int* outX, int* outY);
 void updateMap(Node* head);
+void printMap();
 void dumpStack();
 
 
@@ -403,27 +413,46 @@ void printGrid(Node* head, int size)
     separatorLine();
 }
 
-bool searchFood(int row, int col)
+bool searchFood(int x, int y)
 {
-    if (isAFood(row, col)) return true;
+    if (isAFood(x, y)) return true;
 
     for(int dir = 0; dir < 4; dir++) {
-        int nextRow = row + rowOffset[dir];
-        int nextCol = col + colOffset[dir];
-        if (nextRow < 0 || nextRow >= GRID_SIZE) continue; // Skip outside of map
-        if (nextCol < 0 || nextCol >= GRID_SIZE) continue; // Skip outside of map
-        if (map[nextRow][nextCol] == 1) continue; // Skip obstacles or visited coordinates
+        int nextX = x + xOffset[dir];
+        int nextY = y + yOffset[dir];
+        if (nextX < 0 || nextX >= GRID_SIZE) continue; // Skip outside of map
+        if (nextY < 0 || nextY >= GRID_SIZE) continue; // Skip outside of map
+        if (map[nextY][nextX] == 1) continue; // Skip obstacles or visited coordinates
 
-        map[nextRow][nextCol] = 1;
-        if (searchFood(nextRow, nextCol)) {
+        map[nextY][nextX] = 1;
+        if (searchFood(nextX, nextY)) {
             push((Direction)dir);
             return true;
         }
-        map[nextRow][nextCol] = 0;
+        map[nextY][nextX] = 0;
     }
     return false;
 }
 
+Direction getBestMove(int x, int y)
+{
+    Direction bestDir = currentDir;
+    int shortestDistance = GRID_SIZE * 2; //abs(food.x - x) + abs(food.y - y) * 2;
+    for (int dir = 0; dir < 4; dir++) {
+        int nextX = x + xOffset[dir];
+        int nextY = y + yOffset[dir];
+        if (nextX < 0 || nextX >= GRID_SIZE) continue; // Skip outside of map
+        if (nextY < 0 || nextY >= GRID_SIZE) continue; // Skip outside of map
+        if (map[nextY][nextX] == 1) continue; // Skip obstacles
+
+        int tempDistance = abs(food.x - nextX) + abs(food.y - nextY);
+        if (tempDistance < shortestDistance) {
+            shortestDistance = tempDistance;
+            bestDir = (Direction)dir;
+        }
+    }
+    return bestDir;
+}
 
 void getNextMoveCoord(Node* head, int* outX, int* outY)
 {
@@ -435,8 +464,9 @@ void getNextMoveCoord(Node* head, int* outX, int* outY)
     }
 
     if (mode == ai) {
-        if (isStackEmpty()) searchFood(head->x, head->y);
-        currentDir = pop();
+        //if (isStackEmpty()) searchFood(head->x, head->y);
+        //currentDir = pop();
+        currentDir = getBestMove(head->x, head->y);
     }
 
     switch(currentDir) {
@@ -477,13 +507,23 @@ void updateMap(Node* head)
     for (int row = 0; row < GRID_SIZE; row++) {
         for (int col = 0; col < GRID_SIZE; col++) {
             Node* out = NULL;
-            if (isCoordANode(head, row, col, &out)) {
+            if (isCoordANode(head, col, row, &out)) {
                 map[row][col] = 1;
             } else {
                 map[row][col] = 0;
             }
 
         }
+    }
+}
+void printMap()
+{
+    for (int row = 0; row < GRID_SIZE; row++) {
+        for (int col = 0; col < GRID_SIZE; col++) {
+            if (isAFood(col, row)) printf("x ");
+            else printf("%d ", map[row][col]);
+        }
+        printf("\n");
     }
 }
 
@@ -511,10 +551,10 @@ int main()
         headNode = moveSnake(headNode, x, y);
         updateMap(headNode);
         printGrid(headNode, GRID_SIZE);
-        dumpStack();
+        printMap();
+        //dumpStack();
         sleep(1);
-        //if (true) break;
-    } while (!isGameOver || true);
+    } while (!isGameOver);
 
     pthread_cancel(thread_0); // Kill thread directly because it is already game over
     pthread_join(thread_0, NULL);
