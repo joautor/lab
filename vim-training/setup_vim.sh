@@ -1,11 +1,11 @@
 #!/bin/bash
-
+cd ~
 #Install necessary packages
 echo "[INFO] Installing packages needed for vim plugins"
 echo "[INF0] Installing ack"
-sudo apt install ack;
+sudo apt install ack -y
 echo "[INFO] Installing silversearcher-ag"
-sudo apt install silversearcher-ag;
+sudo apt install silversearcher-ag -y
 
 #create directory ~/.vim/swapfiles
 echo "[INFO] Creating ~/.vim/swapfiles"
@@ -18,7 +18,10 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 #Download .vimrc
 echo "[INFO] Downloading .vimrc"
 wget https://raw.githubusercontent.com/joautor/lab/main/vim-training/.vimrc;
-echo "[INFO] Required next step -> Open .vimrc file via vim and run this command :PlugInstall"
 
+echo "[INFO] Installing vim plugins..."
+vim +'PlugInstall --sync' +qa
 
+cd -
+echo "[INFO] Setup completed."
 
