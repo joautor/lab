@@ -37,6 +37,9 @@ let g:ctrlp_custom_ignore = {
 " Syntastic plugin configuration
 :let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
+"vim-airline configuration
+let g:airline#extensions#tabline#enabled = 1
+
 set expandtab
 set shiftwidth=4
 set softtabstop=4
